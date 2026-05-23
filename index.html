@@ -268,36 +268,71 @@ async function sGet(k,s){try{return await window.storage.get(k,s);}catch(e){retu
 function dc(o){return JSON.parse(JSON.stringify(o));}
 
 async function load(){
-  if(typeof window.storage==='undefined'){items=dc(INIT);hist=[];return;}
   try{
-    const vr=await sGet('inv:v',true);
-    if(!vr||vr.value!==VER){
-      items=dc(INIT);hist=[];
-      await window.storage.set('inv:v',VER,true);
-      await window.storage.set('inv:d',JSON.stringify(items),true);
-      await window.storage.set('inv:h',JSON.stringify(hist),true);
+    // 讀 items
+    const snapItems = await db.collection("inventory").doc("items").get();
+    if(snapItems.exists){
+      items = snapItems.data().data;
     }else{
-      const ir=await sGet('inv:d',true);items=ir?JSON.parse(ir.value):dc(INIT);
-      const hr=await sGet('inv:h',true);hist=hr?JSON.parse(hr.value):[];
+      items = dc(INIT);
+      await saveItems();
     }
-    const nr=await sGet('inv:n',false);
-    if(nr){userName=nr.value;document.getElementById('userName').value=userName;}
-  }catch(e){items=dc(INIT);hist=[];}
+
+    // 讀 hist
+    const snapHist = await db.collection("inventory").doc("hist").get();
+    if(snapHist.exists){
+      hist = snapHist.data().data;
+    }else{
+      hist = [];
+      await saveHist();
+    }
+
+    // 讀 name
+    const snapName = await db.collection("inventory").doc("name").get();
+    if(snapName.exists){
+      userName = snapName.data().value;
+      document.getElementById("userName").value = userName;
+    }
+
+  }catch(e){
+    console.error(e);
+    items = dc(INIT);
+    hist = [];
+  }
 }
+
 async function saveItems(){
-  if(typeof window.storage==='undefined')return;
-  try{await window.storage.set('inv:d',JSON.stringify(items),true);}
-  catch(e){toast('儲存失敗，請重試');}
+  try{
+    await db.collection("inventory").doc("items").set({
+      data: items
+    });
+  }catch(e){
+    console.error(e);
+    toast("儲存失敗，請重試");
+  }
 }
+
 async function saveHist(){
-  if(typeof window.storage==='undefined')return;
-  try{if(hist.length>200)hist=hist.slice(0,200);await window.storage.set('inv:h',JSON.stringify(hist),true);}
-  catch(e){}
+  try{
+    if(hist.length > 200) hist = hist.slice(0,200);
+    await db.collection("inventory").doc("hist").set({
+      data: hist
+    });
+  }catch(e){
+    console.error(e);
+  }
 }
+
 async function saveName(n){
-  if(typeof window.storage==='undefined')return;
-  try{await window.storage.set('inv:n',n,false);}catch(e){}
+  try{
+    await db.collection("inventory").doc("name").set({
+      value: n
+    });
+  }catch(e){
+    console.error(e);
+  }
 }
+
 
 // ===== Helpers =====
 function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -548,6 +583,30 @@ async function handleDel(){
 // ===== Init =====
 async function init(){
   await load();renderTabs();render();
+  // 即時同步 items
+db.collection("inventory").doc("items").onSnapshot(docSnap=>{
+  if(docSnap.exists){
+    items = docSnap.data().data;
+    renderTabs();
+    render();
+  }
+});
+
+// 即時同步 hist
+db.collection("inventory").doc("hist").onSnapshot(docSnap=>{
+  if(docSnap.exists){
+    hist = docSnap.data().data;
+  }
+});
+
+// 即時同步 name
+db.collection("inventory").doc("name").onSnapshot(docSnap=>{
+  if(docSnap.exists){
+    userName = docSnap.data().value;
+    document.getElementById("userName").value = userName;
+  }
+});
+
   document.getElementById('search').addEventListener('input',e=>{srch=e.target.value.trim();render();});
   document.getElementById('userName').addEventListener('input',async e=>{userName=e.target.value.trim();await saveName(userName);});
   document.getElementById('addSiBtn').addEventListener('click',()=>{
@@ -585,6 +644,11 @@ init();
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+<script>
+  const db = firebase.firestore();
+</script>
+
   
 </body>
 </html>
