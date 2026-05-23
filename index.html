@@ -268,8 +268,16 @@ async function sGet(k,s){try{return await window.storage.get(k,s);}catch(e){retu
 function dc(o){return JSON.parse(JSON.stringify(o));}
 
 async function load(){
+
   try{
-    // 讀 items
+    // ⭐ 讀取本機名字（每個人自己的裝置）
+    const localName = localStorage.getItem("localUserName");
+    if(localName){
+      userName = localName;
+      document.getElementById("userName").value = userName;
+    }
+
+    // ⭐ 讀 items（雲端同步）
     const snapItems = await db.collection("inventory").doc("items").get();
     if(snapItems.exists){
       items = snapItems.data().data;
@@ -278,7 +286,7 @@ async function load(){
       await saveItems();
     }
 
-    // 讀 hist
+    // ⭐ 讀 hist（雲端同步）
     const snapHist = await db.collection("inventory").doc("hist").get();
     if(snapHist.exists){
       hist = snapHist.data().data;
@@ -287,19 +295,13 @@ async function load(){
       await saveHist();
     }
 
-    // 讀 name
-    const snapName = await db.collection("inventory").doc("name").get();
-    if(snapName.exists){
-      userName = snapName.data().value;
-      document.getElementById("userName").value = userName;
-    }
-
   }catch(e){
     console.error(e);
     items = dc(INIT);
     hist = [];
   }
 }
+
 
 async function saveItems(){
   try{
@@ -325,13 +327,12 @@ async function saveHist(){
 
 async function saveName(n){
   try{
-    await db.collection("inventory").doc("name").set({
-      value: n
-    });
+    localStorage.setItem("localUserName", n);
   }catch(e){
     console.error(e);
   }
 }
+
 
 
 // ===== Helpers =====
@@ -582,44 +583,70 @@ async function handleDel(){
 
 // ===== Init =====
 async function init(){
-  await load();renderTabs();render();
-  // 即時同步 items
-db.collection("inventory").doc("items").onSnapshot(docSnap=>{
-  if(docSnap.exists){
-    items = docSnap.data().data;
-    renderTabs();
-    render();
-  }
-});
+  await load();
+  renderTabs();
+  render();
 
-// 即時同步 hist
-db.collection("inventory").doc("hist").onSnapshot(docSnap=>{
-  if(docSnap.exists){
-    hist = docSnap.data().data;
-  }
-});
-
-// 即時同步 name
-db.collection("inventory").doc("name").onSnapshot(docSnap=>{
-  if(docSnap.exists){
-    userName = docSnap.data().value;
-    document.getElementById("userName").value = userName;
-  }
-});
-
-  document.getElementById('search').addEventListener('input',e=>{srch=e.target.value.trim();render();});
-  document.getElementById('userName').addEventListener('input',async e=>{userName=e.target.value.trim();await saveName(userName);});
-  document.getElementById('addSiBtn').addEventListener('click',()=>{
-    editSubs.push({n:'',c:0});renderSiRows();
-    setTimeout(()=>{const ins=document.querySelectorAll('.si-name');if(ins.length)ins[ins.length-1].focus();},50);
+  // ⭐ 即時同步 items（多人同步）
+  db.collection("inventory").doc("items").onSnapshot(docSnap=>{
+    if(docSnap.exists){
+      items = docSnap.data().data;
+      renderTabs();
+      render();
+    }
   });
+
+  // ⭐ 即時同步 hist（多人同步）
+  db.collection("inventory").doc("hist").onSnapshot(docSnap=>{
+    if(docSnap.exists){
+      hist = docSnap.data().data;
+    }
+  });
+
+  // ⭐ 名字是「個人設定」，不應該同步
+  // ❌ 所以不需要 onSnapshot("name")
+
+  // 搜尋
+  document.getElementById('search').addEventListener('input', e=>{
+    srch = e.target.value.trim();
+    render();
+  });
+
+  // ⭐ 名字輸入 → 存到 localStorage（每個人自己的裝置）
+  document.getElementById('userName').addEventListener('input', async e=>{
+    userName = e.target.value.trim();
+    await saveName(userName);
+  });
+
+  // 新增子項目
+  document.getElementById('addSiBtn').addEventListener('click',()=>{
+    editSubs.push({n:'',c:0});
+    renderSiRows();
+    setTimeout(()=>{
+      const ins=document.querySelectorAll('.si-name');
+      if(ins.length)ins[ins.length-1].focus();
+    },50);
+  });
+
+  // Modal 按鈕
   document.getElementById('mSave').addEventListener('click',handleSave);
   document.getElementById('mCancel').addEventListener('click',closeModal);
   document.getElementById('mDel').addEventListener('click',handleDel);
-  document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+  // 點背景關閉 modal
+  document.getElementById('modal').addEventListener('click',e=>{
+    if(e.target.id==='modal') closeModal();
+  });
+
+  // ESC 關閉 modal
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') closeModal();
+  });
 }
+
 init();
+
+
 </script>
 <script type="module">
   // Import the functions you need from the SDKs you need
