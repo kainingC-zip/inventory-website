@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>足永之家備品紀錄</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -18,21 +18,27 @@
 html,body{background:var(--bg)}
 body{font-family:'Noto Sans TC',-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.55;font-size:16px;min-height:100vh}
 .app{max-width:880px;margin:0 auto;padding:22px 18px 100px}
-
+ 
 header{padding:18px 0 22px;border-bottom:2px dashed var(--line);margin-bottom:22px}
 header h1{font-size:26px;font-weight:900;margin-bottom:4px}
 header .sub{color:var(--ink2);font-size:14px}
-.user-row{margin-top:14px}
+.user-row{margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .user-inp{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px 7px 12px;box-shadow:var(--sh)}
 .user-inp label{font-size:14px;color:var(--ink2);font-weight:500}
 .user-inp input{border:none;outline:none;font-family:inherit;font-size:15px;width:110px;color:var(--ink);background:transparent;font-weight:600}
-
+.sync-status{font-size:12px;color:var(--ink3);display:inline-flex;align-items:center;gap:5px}
+.sync-status .dot{width:8px;height:8px;border-radius:50%;background:var(--ink3);display:inline-block}
+.sync-status.ok .dot{background:var(--C)}
+.sync-status.err .dot{background:var(--W)}
+.sync-status.loading .dot{background:var(--D);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+ 
 .note-banner{background:linear-gradient(135deg,#FFF6DD,#FFFBEC);border:1px solid #EBDDA8;padding:12px 16px;border-radius:12px;font-size:13px;color:var(--ink2);margin-bottom:18px;line-height:1.6}
-
+ 
 .search-row{margin-bottom:14px}
 .search-box{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--line);border-radius:14px;font-family:inherit;font-size:15px;outline:none;color:var(--ink);background:var(--paper) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238F8880' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") no-repeat 14px center}
 .search-box:focus{border-color:var(--ink2)}
-
+ 
 .tabs{display:flex;gap:7px;margin-bottom:18px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{border:1.5px solid var(--line);background:var(--paper);padding:9px 16px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink2);cursor:pointer;white-space:nowrap;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
@@ -45,14 +51,14 @@ header .sub{color:var(--ink2);font-size:14px}
 .tab.active[data-cat=shop]{background:var(--W);color:#fff;border-color:var(--W)}
 .tab.active[data-cat=history]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .tab.active .cnt{background:rgba(255,255,255,.25);color:#fff}
-
+ 
 .section{margin-bottom:32px}
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
 .sec-title{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800}
 .sec-sub{font-size:12px;color:var(--ink3);font-weight:500;margin-left:4px}
 .add-btn{border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;padding:7px 14px;border-radius:999px;transition:opacity .15s;white-space:nowrap}
 .add-btn:hover{opacity:.85}
-
+ 
 .cards{display:grid;gap:10px}
 .card{background:var(--paper);border-radius:14px;padding:14px 16px;box-shadow:var(--sh);border-left:4px solid var(--line);cursor:pointer;transition:transform .1s,box-shadow .15s}
 .card:hover{box-shadow:var(--shl);transform:translateY(-1px)}
@@ -69,8 +75,7 @@ header .sub{color:var(--ink2);font-size:14px}
 .card-name{font-size:17px;font-weight:700;letter-spacing:-.2px}
 .oos-badge{font-size:11px;background:var(--Wb);color:var(--W);padding:2px 8px;border-radius:999px;font-weight:700;flex-shrink:0}
 .oos-part-badge{font-size:11px;background:var(--Db);color:var(--D);padding:2px 8px;border-radius:999px;font-weight:700;flex-shrink:0}
-
-/* Count display */
+ 
 .inline-cnt{font-size:17px;font-weight:800;color:var(--ink);flex-shrink:0;margin-left:8px}
 .inline-cnt.z{color:var(--W)}
 .qty-multi{margin:4px 0}
@@ -79,18 +84,17 @@ header .sub{color:var(--ink2);font-size:14px}
 .sq-name{font-size:14px;color:var(--ink2);flex:1;padding-right:8px}
 .sq-cnt{font-size:16px;font-weight:700;color:var(--ink);min-width:24px;text-align:right}
 .sq-cnt.z{color:var(--W)}
-
+ 
 .card-note{font-size:13px;color:var(--ink2);background:var(--bg2);padding:7px 11px;border-radius:8px;margin-top:8px;border-left:2px solid var(--line)}
 .card-meta{font-size:12px;color:var(--ink3);margin-top:10px;display:flex;align-items:center;gap:5px}
 .card-meta .who{color:var(--ink2);font-weight:600}
-
+ 
 .stats{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
 .pill{background:var(--paper);border:1px solid var(--line);padding:4px 12px;border-radius:999px;font-size:13px;color:var(--ink2)}
 .pill strong{color:var(--ink);font-weight:700}
 .pill.w{background:var(--Wb);color:var(--W);border-color:#F0C8AC}
 .pill.w strong{color:var(--W)}
-
-/* Modal */
+ 
 .modal-ov{position:fixed;inset:0;background:rgba(30,25,20,.45);display:none;align-items:flex-end;justify-content:center;z-index:100;animation:fadeIn .15s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .modal-ov.show{display:flex}
@@ -106,8 +110,7 @@ header .sub{color:var(--ink2);font-size:14px}
 .field input[type=text],.field textarea{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:16px;outline:none;color:var(--ink);background:var(--paper)}
 .field input[type=text]:focus,.field textarea:focus{border-color:var(--ink2)}
 .field textarea{resize:vertical;min-height:60px;line-height:1.55}
-
-/* Subitem editor */
+ 
 .si-rows{margin-bottom:8px}
 .si-row{display:flex;align-items:center;gap:7px;margin-bottom:8px}
 .si-name{flex:1;min-width:0;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:15px;outline:none;color:var(--ink)}
@@ -122,7 +125,7 @@ header .sub{color:var(--ink2);font-size:14px}
 .rm-row:hover{background:var(--Bb);color:var(--B)}
 .add-si{width:100%;padding:9px;background:transparent;border:1.5px dashed var(--line);border-radius:10px;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s}
 .add-si:hover{background:var(--bg);border-color:var(--ink3);color:var(--ink)}
-
+ 
 .modal-acts{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
 .btn{border:none;font-family:inherit;font-size:15px;font-weight:700;padding:12px 18px;border-radius:12px;cursor:pointer;transition:all .15s}
 .btn-p{background:var(--ink);color:#fff;flex:1}
@@ -131,16 +134,16 @@ header .sub{color:var(--ink2);font-size:14px}
 .btn-s:hover{background:var(--line)}
 .btn-d{background:transparent;color:var(--B);border:1.5px solid var(--Bb);font-size:14px}
 .btn-d:hover{background:var(--Bb)}
-
+ 
 .tl{display:grid;gap:10px}
 .tl-item{background:var(--paper);border-radius:12px;padding:12px 15px;box-shadow:var(--sh);border-left:3px solid var(--ink3)}
 .tl-item[data-act=add]{border-left-color:var(--C)}
-.tl-item[data-act=delete]{border-left-color:var(--B)}
+.tl-item[data-act=del]{border-left-color:var(--B)}
 .tl-who{font-size:12px;color:var(--ink3);margin-bottom:4px}
 .tl-who strong{color:var(--ink2);font-weight:700}
 .tl-what{font-size:14px;color:var(--ink)}
 .tl-diff{margin-top:6px;font-size:13px;color:var(--ink2);background:var(--bg2);padding:6px 10px;border-radius:8px;line-height:1.6}
-
+ 
 .empty{text-align:center;padding:50px 20px;color:var(--ink3);font-size:14px;background:var(--paper);border-radius:14px;border:1.5px dashed var(--line)}
 .loading{text-align:center;padding:60px 20px;color:var(--ink3)}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:var(--shl);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:200;white-space:nowrap;max-width:90vw}
@@ -157,6 +160,7 @@ header .sub{color:var(--ink2);font-size:14px}
         <label>👤 我是</label>
         <input id="userName" placeholder="輸入名字" maxlength="10" autocomplete="off">
       </div>
+      <div class="sync-status loading" id="syncStatus"><span class="dot"></span><span id="syncText">連線中…</span></div>
     </div>
   </header>
   <div class="note-banner">💡 點任何品項可<strong>編輯數量或備註</strong>，系統會自動記下是誰、何時改的。</div>
@@ -166,7 +170,7 @@ header .sub{color:var(--ink2);font-size:14px}
   <div class="tabs" id="tabs"></div>
   <div id="content"><div class="loading">載入中…</div></div>
 </div>
-
+ 
 <div class="modal-ov" id="modal">
   <div class="modal">
     <h2 id="mTitle">編輯品項</h2>
@@ -192,17 +196,34 @@ header .sub{color:var(--ink2);font-size:14px}
   </div>
 </div>
 <div class="toast" id="toast"></div>
-
+ 
+<!-- 1. Firebase Compat SDK（一定要先載入） -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+ 
+<!-- 2. 初始化 Firebase -->
 <script>
-const VER='2';
+  const firebaseConfig = {
+    apiKey: "AIzaSyAS7S0bIrGmAOVjWnS9Bim7CJGe9i3p-vI",
+    authDomain: "family-inventory-734b0.firebaseapp.com",
+    projectId: "family-inventory-734b0",
+    storageBucket: "family-inventory-734b0.firebasestorage.app",
+    messagingSenderId: "520256214426",
+    appId: "1:520256214426:web:cc36dbae7afbb7605e5623"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+ 
+<!-- 3. 主程式 -->
+<script>
 const CATS={
   A:{name:'個人清潔',full:'個人清潔衛生用品',emoji:'🚻',desc:'盥洗、牙齒、衛生'},
   B:{name:'美妝保養',full:'美妝保養',emoji:'💄',desc:'保養、面膜、油類'},
   C:{name:'清潔民生',full:'清潔民生用品',emoji:'🧽',desc:'廚房、清潔、日用'},
   D:{name:'營養保健',full:'營養保健品',emoji:'💊',desc:'保健食品、調味料'},
 };
-
-// sub = {name:string, count:number}
+ 
 const INIT=[
   {id:'A1',cat:'A',name:'洗髮精',note:'',subs:[{n:'一般洗髮精',c:4},{n:'落建洗髮露(大)',c:1},{n:'落建洗髮露(小)',c:1},{n:'Alpecin咖啡因洗髮精',c:1}]},
   {id:'A2',cat:'A',name:'潤髮乳',note:'',subs:[{n:'',c:1}]},
@@ -259,83 +280,20 @@ const INIT=[
   {id:'D13',cat:'D',name:'醬油',note:'',subs:[{n:'',c:3}]},
   {id:'D14',cat:'D',name:'褪黑激素',note:'',subs:[{n:'',c:2}]},
 ];
-
+ 
 // ===== State =====
 let items=[],hist=[],userName='',curTab='A',srch='',editId=null,editSubs=[],editCat='A';
-
-// ===== Storage =====
-async function sGet(k,s){try{return await window.storage.get(k,s);}catch(e){return null;}}
-function dc(o){return JSON.parse(JSON.stringify(o));}
-
-async function load(){
-
-  try{
-    // ⭐ 讀取本機名字（每個人自己的裝置）
-    const localName = localStorage.getItem("localUserName");
-    if(localName){
-      userName = localName;
-      document.getElementById("userName").value = userName;
-    }
-
-    // ⭐ 讀 items（雲端同步）
-    const snapItems = await db.collection("inventory").doc("items").get();
-    if(snapItems.exists){
-      items = snapItems.data().data;
-    }else{
-      items = dc(INIT);
-      await saveItems();
-    }
-
-    // ⭐ 讀 hist（雲端同步）
-    const snapHist = await db.collection("inventory").doc("hist").get();
-    if(snapHist.exists){
-      hist = snapHist.data().data;
-    }else{
-      hist = [];
-      await saveHist();
-    }
-
-  }catch(e){
-    console.error(e);
-    items = dc(INIT);
-    hist = [];
-  }
+let itemsLoaded=false;
+ 
+// ===== Status indicator =====
+function setStatus(state,text){
+  const el=document.getElementById('syncStatus');
+  el.className='sync-status '+state;
+  document.getElementById('syncText').textContent=text;
 }
-
-
-async function saveItems(){
-  try{
-    await db.collection("inventory").doc("items").set({
-      data: items
-    });
-  }catch(e){
-    console.error(e);
-    toast("儲存失敗，請重試");
-  }
-}
-
-async function saveHist(){
-  try{
-    if(hist.length > 200) hist = hist.slice(0,200);
-    await db.collection("inventory").doc("hist").set({
-      data: hist
-    });
-  }catch(e){
-    console.error(e);
-  }
-}
-
-async function saveName(n){
-  try{
-    localStorage.setItem("localUserName", n);
-  }catch(e){
-    console.error(e);
-  }
-}
-
-
-
+ 
 // ===== Helpers =====
+function dc(o){return JSON.parse(JSON.stringify(o));}
 function esc(s){return(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function fmtDate(iso){
   if(!iso)return'';
@@ -372,7 +330,35 @@ function filtered(cat){
   }
   return list;
 }
-
+ 
+// ===== Firestore =====
+async function saveItems(){
+  try{
+    await db.collection("inventory").doc("items").set({data:items});
+  }catch(e){
+    console.error('saveItems error:',e);
+    toast('儲存失敗：'+(e.message||'請檢查網路'));
+    setStatus('err','儲存失敗');
+  }
+}
+async function saveHist(){
+  try{
+    if(hist.length>200)hist=hist.slice(0,200);
+    await db.collection("inventory").doc("hist").set({data:hist});
+  }catch(e){console.error('saveHist error:',e);}
+}
+ 
+// ===== Name (local only) =====
+function loadName(){
+  try{
+    const n=localStorage.getItem('localUserName');
+    if(n){userName=n;document.getElementById('userName').value=n;}
+  }catch(e){console.warn('localStorage not available',e);}
+}
+function saveName(n){
+  try{localStorage.setItem('localUserName',n);}catch(e){console.warn(e);}
+}
+ 
 // ===== Render =====
 function renderTabs(){
   const el=document.getElementById('tabs');
@@ -383,15 +369,17 @@ function renderTabs(){
     <button class="tab${curTab==='shop'?' active':''}" data-cat="shop">🛒 缺貨清單 <span class="cnt">${shopCnt}</span></button>
     <button class="tab${curTab==='history'?' active':''}" data-cat="history">📜 更新紀錄</button>
   `;
-  el.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{curTab=b.dataset.cat;renderTabs();render();window.scrollTo({top:0,behavior:'smooth'});}));
+  el.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+    curTab=b.dataset.cat;renderTabs();render();window.scrollTo({top:0,behavior:'smooth'});
+  }));
 }
-
+ 
 function subsHtml(it){
   const subs=it.subs||[];
   if(subs.length===1&&!subs[0].n)return'';
   return`<div class="qty-multi">${subs.map(s=>`<div class="sq-row"><span class="sq-name">${esc(s.n)||'<em style="opacity:.4">—</em>'}</span><span class="sq-cnt${s.c===0?' z':''}">${s.c}</span></div>`).join('')}</div>`;
 }
-
+ 
 function cardHtml(it){
   const oi=oosInfo(it);
   const cls=oi.all?'oos-all':oi.any?'oos-part':'';
@@ -406,9 +394,11 @@ function cardHtml(it){
     <div class="card-meta">⏱ ${lb}</div>
   </div>`;
 }
-
-function bindCards(){document.querySelectorAll('.card').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.id)));}
-
+ 
+function bindCards(){
+  document.querySelectorAll('.card').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.id)));
+}
+ 
 function render(){
   const ct=document.getElementById('content');
   if(curTab==='history'){renderHist(ct);return;}
@@ -430,7 +420,7 @@ function render(){
   const ab=document.getElementById('addBtn');if(ab)ab.addEventListener('click',()=>openModal(null,cat));
   bindCards();
 }
-
+ 
 function renderShop(ct){
   const list=filtered('shop');
   const grouped={A:[],B:[],C:[],D:[]};
@@ -450,7 +440,7 @@ function renderShop(ct){
   </div>`;
   bindCards();
 }
-
+ 
 function renderHist(ct){
   ct.innerHTML=`<div class="section">
     <div class="sec-hd"><div><div class="sec-title">📜 更新紀錄</div><div class="sec-sub">家人們最近的變動</div></div></div>
@@ -459,7 +449,7 @@ function renderHist(ct){
       :`<div class="stats"><span class="pill">最近 <strong>${hist.length}</strong> 筆</span></div><div class="tl">${hist.map(histHtml).join('')}</div>`}
   </div>`;
 }
-
+ 
 function histHtml(h){
   let what='',diff='';
   if(h.act==='add'){
@@ -477,10 +467,15 @@ function histHtml(h){
   }
   return`<div class="tl-item" data-act="${h.act}"><div class="tl-who"><strong>${esc(h.by)}</strong> · ${fmtDate(h.at)}</div><div class="tl-what">${what}</div>${diff}</div>`;
 }
-
+ 
 // ===== Modal =====
 function openModal(id,cat){
-  if(!userName.trim()){toast('請先填入你的名字 👤');document.getElementById('userName').focus();return;}
+  if(!userName.trim()){
+    toast('請先填入你的名字 👤');
+    const u=document.getElementById('userName');u.focus();
+    try{u.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){}
+    return;
+  }
   editId=id;editCat=cat||'A';
   if(!id){
     editSubs=[{n:'',c:0}];
@@ -502,9 +497,9 @@ function openModal(id,cat){
   document.getElementById('modal').classList.add('show');
   setTimeout(()=>document.getElementById('mName').focus(),100);
 }
-
+ 
 function closeModal(){document.getElementById('modal').classList.remove('show');editId=null;}
-
+ 
 function renderSiRows(){
   const c=document.getElementById('siRows');
   c.innerHTML=editSubs.map((s,i)=>`
@@ -518,11 +513,9 @@ function renderSiRows(){
       ${editSubs.length>1?`<button class="rm-row" data-i="${i}" title="刪除此列">✕</button>`:''}
     </div>
   `).join('');
-  // Name: update in-memory only, no re-render (preserves focus)
   c.querySelectorAll('.si-name').forEach(inp=>{
     inp.addEventListener('input',()=>{editSubs[+inp.dataset.i].n=inp.value;});
   });
-  // Minus: targeted DOM update
   c.querySelectorAll('.ctr-btn.minus').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const i=+btn.dataset.i;if(editSubs[i].c<=0)return;
@@ -533,7 +526,6 @@ function renderSiRows(){
       btn.disabled=editSubs[i].c<=0;
     });
   });
-  // Plus: targeted DOM update
   c.querySelectorAll('.ctr-btn.plus').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const i=+btn.dataset.i;editSubs[i].c++;
@@ -543,12 +535,11 @@ function renderSiRows(){
       row.querySelector('.ctr-btn.minus').disabled=false;
     });
   });
-  // Remove row: full re-render of rows only
   c.querySelectorAll('.rm-row').forEach(btn=>{
     btn.addEventListener('click',()=>{editSubs.splice(+btn.dataset.i,1);renderSiRows();});
   });
 }
-
+ 
 async function handleSave(){
   if(!userName.trim()){toast('請先填入你的名字');return;}
   const name=document.getElementById('mName').value.trim();
@@ -568,9 +559,10 @@ async function handleSave(){
     hist.unshift({act:'add',name,ns:subs,by:userName,at:now});
     toast(`已新增 ${id} ✓`);
   }
-  await saveItems();await saveHist();closeModal();renderTabs();render();
+  closeModal();renderTabs();render();
+  await saveItems();await saveHist();
 }
-
+ 
 async function handleDel(){
   if(!editId)return;
   const it=items.find(i=>i.id===editId);if(!it)return;
@@ -578,47 +570,24 @@ async function handleDel(){
   const now=new Date().toISOString();
   hist.unshift({act:'del',name:it.name,by:userName,at:now});
   items=items.filter(i=>i.id!==editId);
-  await saveItems();await saveHist();toast('已刪除');closeModal();renderTabs();render();
+  closeModal();toast('已刪除');renderTabs();render();
+  await saveItems();await saveHist();
 }
-
+ 
 // ===== Init =====
 async function init(){
-  await load();
-  renderTabs();
-  render();
-
-  // ⭐ 即時同步 items（多人同步）
-  db.collection("inventory").doc("items").onSnapshot(docSnap=>{
-    if(docSnap.exists){
-      items = docSnap.data().data;
-      renderTabs();
-      render();
-    }
+  // 先把名字讀出來（不依賴 Firebase）
+  loadName();
+ 
+  // 綁定 UI 事件（在 Firebase 載入前就先綁，避免使用者點到沒反應）
+  document.getElementById('userName').addEventListener('input',e=>{
+    userName=e.target.value.trim();
+    saveName(userName);
   });
-
-  // ⭐ 即時同步 hist（多人同步）
-  db.collection("inventory").doc("hist").onSnapshot(docSnap=>{
-    if(docSnap.exists){
-      hist = docSnap.data().data;
-    }
+  document.getElementById('search').addEventListener('input',e=>{
+    srch=e.target.value.trim();
+    if(itemsLoaded)render();
   });
-
-  // ⭐ 名字是「個人設定」，不應該同步
-  // ❌ 所以不需要 onSnapshot("name")
-
-  // 搜尋
-  document.getElementById('search').addEventListener('input', e=>{
-    srch = e.target.value.trim();
-    render();
-  });
-
-  // ⭐ 名字輸入 → 存到 localStorage（每個人自己的裝置）
-  document.getElementById('userName').addEventListener('input', async e=>{
-    userName = e.target.value.trim();
-    await saveName(userName);
-  });
-
-  // 新增子項目
   document.getElementById('addSiBtn').addEventListener('click',()=>{
     editSubs.push({n:'',c:0});
     renderSiRows();
@@ -627,55 +596,63 @@ async function init(){
       if(ins.length)ins[ins.length-1].focus();
     },50);
   });
-
-  // Modal 按鈕
   document.getElementById('mSave').addEventListener('click',handleSave);
   document.getElementById('mCancel').addEventListener('click',closeModal);
   document.getElementById('mDel').addEventListener('click',handleDel);
-
-  // 點背景關閉 modal
   document.getElementById('modal').addEventListener('click',e=>{
-    if(e.target.id==='modal') closeModal();
+    if(e.target.id==='modal')closeModal();
   });
-
-  // ESC 關閉 modal
   document.addEventListener('keydown',e=>{
-    if(e.key==='Escape') closeModal();
+    if(e.key==='Escape')closeModal();
   });
+ 
+  // 連線狀態
+  setStatus('loading','連線中…');
+ 
+  // 啟動即時同步（onSnapshot 第一次觸發時就會把資料帶回來）
+  try{
+    db.collection('inventory').doc('items').onSnapshot(snap=>{
+      if(snap.exists && snap.data().data){
+        items=snap.data().data;
+      }else{
+        // 雲端沒資料 → 第一次使用，寫入初始資料
+        items=dc(INIT);
+        saveItems();
+      }
+      itemsLoaded=true;
+      renderTabs();render();
+      setStatus('ok','已連線');
+    },err=>{
+      console.error('items snapshot error:',err);
+      setStatus('err','同步失敗');
+      // Fallback：先顯示初始資料，讓使用者至少能看
+      if(!itemsLoaded){
+        items=dc(INIT);
+        itemsLoaded=true;
+        renderTabs();render();
+      }
+      toast('雲端連線失敗：'+(err.message||'請檢查網路或 Firestore 規則'));
+    });
+ 
+    db.collection('inventory').doc('hist').onSnapshot(snap=>{
+      if(snap.exists && snap.data().data){
+        hist=snap.data().data;
+        // 若目前在歷史頁，重新渲染
+        if(curTab==='history')render();
+      }
+    },err=>{
+      console.error('hist snapshot error:',err);
+    });
+  }catch(e){
+    console.error('init error:',e);
+    setStatus('err','初始化失敗');
+    items=dc(INIT);itemsLoaded=true;
+    renderTabs();render();
+    toast('Firebase 初始化失敗，目前為離線模式');
+  }
 }
-
+ 
 init();
-
-
 </script>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAS7S0bIrGmAOVjWnS9Bim7CJGe9i3p-vI",
-    authDomain: "family-inventory-734b0.firebaseapp.com",
-    projectId: "family-inventory-734b0",
-    storageBucket: "family-inventory-734b0.firebasestorage.app",
-    messagingSenderId: "520256214426",
-    appId: "1:520256214426:web:cc36dbae7afbb7605e5623",
-    measurementId: "G-BF1XWMQ611"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
-<script>
-  const db = firebase.firestore();
-</script>
-
-  
 </body>
 </html>
