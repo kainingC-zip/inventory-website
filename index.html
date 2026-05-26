@@ -224,65 +224,66 @@ const CATS={
   D:{name:'營養保健',full:'營養保健品',emoji:'💊',desc:'保健食品、調味料'},
 };
  
+// 初始資料：id 改為純流水號（每個分類各自從 1 開始）
 const INIT=[
-  {id:'A1',cat:'A',name:'洗髮精',note:'',subs:[{n:'一般洗髮精',c:4},{n:'落建洗髮露(大)',c:1},{n:'落建洗髮露(小)',c:1},{n:'Alpecin咖啡因洗髮精',c:1}]},
-  {id:'A2',cat:'A',name:'潤髮乳',note:'',subs:[{n:'',c:1}]},
-  {id:'A3',cat:'A',name:'圓牙線',note:'',subs:[{n:'',c:9}]},
-  {id:'A4',cat:'A',name:'牙線棒',note:'',subs:[{n:'雙線3M細滑(小包)',c:12},{n:'單包裝',c:1}]},
-  {id:'A5',cat:'A',name:'香皂',note:'',subs:[{n:'',c:9}]},
-  {id:'A6',cat:'A',name:'牙膏',note:'',subs:[{n:'高露潔',c:3},{n:'蜂膠',c:1},{n:'舒酸定過敏牙膏',c:1}]},
-  {id:'A7',cat:'A',name:'化妝棉',note:'',subs:[{n:'條裝',c:4}]},
-  {id:'A8',cat:'A',name:'衛生紙',note:'',subs:[{n:'袋',c:3}]},
-  {id:'A9',cat:'A',name:'衛生棉',note:'蘇菲28cm 購入 2023/08/22；已過期品：蘇菲33cm（2014/12/21）',subs:[{n:'蘇菲28cm',c:4},{n:'靠得住23cm',c:3},{n:'好自在液體24cm 36片/盒',c:2},{n:'好自在液體30片/盒',c:1},{n:'護墊14.5cm',c:6}]},
-  {id:'A10',cat:'A',name:'漱口水',note:'',subs:[{n:'',c:2}]},
-  {id:'A11',cat:'A',name:'乳液',note:'',subs:[{n:'小瓶',c:1}]},
-  {id:'A12',cat:'A',name:'飛利浦牙刷刷頭',note:'',subs:[{n:'',c:11}]},
-  {id:'A13',cat:'A',name:'酵素洗顏球',note:'',subs:[{n:'',c:12}]},
-  {id:'A14',cat:'A',name:'免洗褲',note:'',subs:[{n:'',c:3}]},
-  {id:'A15',cat:'A',name:'免洗襪',note:'',subs:[{n:'',c:2}]},
-  {id:'A16',cat:'A',name:'小瓶小包旅行組',note:'庫存充足，以下為概估數量',subs:[{n:'沐浴精',c:10},{n:'洗髮精',c:10},{n:'潤膚乳',c:10},{n:'潤髮乳',c:10}]},
-  {id:'B1',cat:'B',name:'貝膚黛瑪',note:'',subs:[{n:'效期 2027/11',c:1},{n:'效期 2028/06',c:3}]},
-  {id:'B2',cat:'B',name:'極潤化妝水',note:'',subs:[{n:'',c:0}]},
-  {id:'B3',cat:'B',name:'AHC B5玻尿酸精華液',note:'',subs:[{n:'',c:12}]},
-  {id:'B4',cat:'B',name:'護手乳',note:'',subs:[{n:'',c:4}]},
-  {id:'B5',cat:'B',name:'玫瑰水',note:'',subs:[{n:'',c:1}]},
-  {id:'B6',cat:'B',name:'面膜',note:'',subs:[{n:'植萃',c:0},{n:'火龍果',c:4},{n:'玫瑰',c:16}]},
-  {id:'B7',cat:'B',name:'ALLIE防曬乳/補色',note:'',subs:[{n:'',c:0}]},
-  {id:'B8',cat:'B',name:'美容油',note:'',subs:[{n:'罌粟仔油 50ml',c:0},{n:'辣木油 30ml',c:0},{n:'玫瑰油 20ml',c:1}]},
-  {id:'B9',cat:'B',name:'洗面乳',note:'',subs:[{n:'',c:1}]},
-  {id:'B10',cat:'B',name:'雅雯維他噴霧E',note:'',subs:[{n:'',c:0}]},
-  {id:'B11',cat:'B',name:'蘆薈露',note:'',subs:[{n:'',c:1}]},
-  {id:'B12',cat:'B',name:'護唇/凡士林',note:'',subs:[{n:'護唇膏',c:0},{n:'凡士林',c:1}]},
-  {id:'C1',cat:'C',name:'廚房紙巾',note:'',subs:[{n:'',c:18}]},
-  {id:'C2',cat:'C',name:'芳香豆',note:'',subs:[{n:'本體',c:2},{n:'補充包',c:1}]},
-  {id:'C3',cat:'C',name:'洗碗精',note:'',subs:[{n:'',c:3}]},
-  {id:'C4',cat:'C',name:'馬桶清潔劑',note:'',subs:[{n:'',c:1}]},
-  {id:'C5',cat:'C',name:'暖暖包',note:'',subs:[{n:'',c:31}]},
-  {id:'C6',cat:'C',name:'BRITA濾芯',note:'',subs:[{n:'',c:4}]},
-  {id:'C7',cat:'C',name:'咖啡豆',note:'',subs:[{n:'',c:2}]},
-  {id:'C8',cat:'C',name:'麵條',note:'',subs:[{n:'經濟麵',c:1},{n:'細麵',c:1}]},
-  {id:'C9',cat:'C',name:'洗衣球',note:'',subs:[{n:'',c:1}]},
-  {id:'C10',cat:'C',name:'防霉防臭劑',note:'',subs:[{n:'',c:1}]},
-  {id:'C11',cat:'C',name:'管狀濾芯',note:'',subs:[{n:'',c:5}]},
-  {id:'C12',cat:'C',name:'除塵紙',note:'',subs:[{n:'',c:2}]},
-  {id:'D1',cat:'D',name:'葉黃素',note:'',subs:[{n:'',c:1}]},
-  {id:'D2',cat:'D',name:'魚油類',note:'',subs:[{n:'磷蝦油',c:0},{n:'魚油',c:0}]},
-  {id:'D3',cat:'D',name:'維生素B',note:'',subs:[{n:'B+鋅',c:1},{n:'B+鐵',c:0}]},
-  {id:'D4',cat:'D',name:'維生素D3',note:'',subs:[{n:'',c:1}]},
-  {id:'D5',cat:'D',name:'蔓越莓錠',note:'',subs:[{n:'',c:1}]},
-  {id:'D6',cat:'D',name:'益生菌 120顆',note:'',subs:[{n:'',c:0}]},
-  {id:'D7',cat:'D',name:'還原型輔酵素Q10+維生素E',note:'',subs:[{n:'',c:0}]},
-  {id:'D8',cat:'D',name:'益生菌(粉狀)',note:'',subs:[{n:'威德 90包/盒',c:3},{n:'善存 90包/盒',c:0}]},
-  {id:'D9',cat:'D',name:'UC2膠原錠 110錠',note:'',subs:[{n:'',c:0}]},
-  {id:'D10',cat:'D',name:'檸檬酸鈣',note:'',subs:[{n:'威德 90包/盒',c:0},{n:'顧可飛 450顆/罐',c:0}]},
-  {id:'D11',cat:'D',name:'大麥若葉 176包',note:'',subs:[{n:'',c:1}]},
-  {id:'D12',cat:'D',name:'燕麥/五麥',note:'',subs:[{n:'大麥燕片',c:0},{n:'全天然五麥',c:1}]},
-  {id:'D13',cat:'D',name:'醬油',note:'',subs:[{n:'',c:3}]},
-  {id:'D14',cat:'D',name:'褪黑激素',note:'',subs:[{n:'',c:2}]},
+  {cat:'A',name:'洗髮精',note:'',subs:[{n:'一般洗髮精',c:4},{n:'落建洗髮露(大)',c:1},{n:'落建洗髮露(小)',c:1},{n:'Alpecin咖啡因洗髮精',c:1}]},
+  {cat:'A',name:'潤髮乳',note:'',subs:[{n:'',c:1}]},
+  {cat:'A',name:'圓牙線',note:'',subs:[{n:'',c:9}]},
+  {cat:'A',name:'牙線棒',note:'',subs:[{n:'雙線3M細滑(小包)',c:12},{n:'單包裝',c:1}]},
+  {cat:'A',name:'香皂',note:'',subs:[{n:'',c:9}]},
+  {cat:'A',name:'牙膏',note:'',subs:[{n:'高露潔',c:3},{n:'蜂膠',c:1},{n:'舒酸定過敏牙膏',c:1}]},
+  {cat:'A',name:'化妝棉',note:'',subs:[{n:'條裝',c:4}]},
+  {cat:'A',name:'衛生紙',note:'',subs:[{n:'袋',c:3}]},
+  {cat:'A',name:'衛生棉',note:'蘇菲28cm 購入 2023/08/22；已過期品：蘇菲33cm（2014/12/21）',subs:[{n:'蘇菲28cm',c:4},{n:'靠得住23cm',c:3},{n:'好自在液體24cm 36片/盒',c:2},{n:'好自在液體30片/盒',c:1},{n:'護墊14.5cm',c:6}]},
+  {cat:'A',name:'漱口水',note:'',subs:[{n:'',c:2}]},
+  {cat:'A',name:'乳液',note:'',subs:[{n:'小瓶',c:1}]},
+  {cat:'A',name:'飛利浦牙刷刷頭',note:'',subs:[{n:'',c:11}]},
+  {cat:'A',name:'酵素洗顏球',note:'',subs:[{n:'',c:12}]},
+  {cat:'A',name:'免洗褲',note:'',subs:[{n:'',c:3}]},
+  {cat:'A',name:'免洗襪',note:'',subs:[{n:'',c:2}]},
+  {cat:'A',name:'小瓶小包旅行組',note:'庫存充足，以下為概估數量',subs:[{n:'沐浴精',c:10},{n:'洗髮精',c:10},{n:'潤膚乳',c:10},{n:'潤髮乳',c:10}]},
+  {cat:'B',name:'貝膚黛瑪',note:'',subs:[{n:'效期 2027/11',c:1},{n:'效期 2028/06',c:3}]},
+  {cat:'B',name:'極潤化妝水',note:'',subs:[{n:'',c:0}]},
+  {cat:'B',name:'AHC B5玻尿酸精華液',note:'',subs:[{n:'',c:12}]},
+  {cat:'B',name:'護手乳',note:'',subs:[{n:'',c:4}]},
+  {cat:'B',name:'玫瑰水',note:'',subs:[{n:'',c:1}]},
+  {cat:'B',name:'面膜',note:'',subs:[{n:'植萃',c:0},{n:'火龍果',c:4},{n:'玫瑰',c:16}]},
+  {cat:'B',name:'ALLIE防曬乳/補色',note:'',subs:[{n:'',c:0}]},
+  {cat:'B',name:'美容油',note:'',subs:[{n:'罌粟仔油 50ml',c:0},{n:'辣木油 30ml',c:0},{n:'玫瑰油 20ml',c:1}]},
+  {cat:'B',name:'洗面乳',note:'',subs:[{n:'',c:1}]},
+  {cat:'B',name:'雅雯維他噴霧E',note:'',subs:[{n:'',c:0}]},
+  {cat:'B',name:'蘆薈露',note:'',subs:[{n:'',c:1}]},
+  {cat:'B',name:'護唇/凡士林',note:'',subs:[{n:'護唇膏',c:0},{n:'凡士林',c:1}]},
+  {cat:'C',name:'廚房紙巾',note:'',subs:[{n:'',c:18}]},
+  {cat:'C',name:'芳香豆',note:'',subs:[{n:'本體',c:2},{n:'補充包',c:1}]},
+  {cat:'C',name:'洗碗精',note:'',subs:[{n:'',c:3}]},
+  {cat:'C',name:'馬桶清潔劑',note:'',subs:[{n:'',c:1}]},
+  {cat:'C',name:'暖暖包',note:'',subs:[{n:'',c:31}]},
+  {cat:'C',name:'BRITA濾芯',note:'',subs:[{n:'',c:4}]},
+  {cat:'C',name:'咖啡豆',note:'',subs:[{n:'',c:2}]},
+  {cat:'C',name:'麵條',note:'',subs:[{n:'經濟麵',c:1},{n:'細麵',c:1}]},
+  {cat:'C',name:'洗衣球',note:'',subs:[{n:'',c:1}]},
+  {cat:'C',name:'防霉防臭劑',note:'',subs:[{n:'',c:1}]},
+  {cat:'C',name:'管狀濾芯',note:'',subs:[{n:'',c:5}]},
+  {cat:'C',name:'除塵紙',note:'',subs:[{n:'',c:2}]},
+  {cat:'D',name:'葉黃素',note:'',subs:[{n:'',c:1}]},
+  {cat:'D',name:'魚油類',note:'',subs:[{n:'磷蝦油',c:0},{n:'魚油',c:0}]},
+  {cat:'D',name:'維生素B',note:'',subs:[{n:'B+鋅',c:1},{n:'B+鐵',c:0}]},
+  {cat:'D',name:'維生素D3',note:'',subs:[{n:'',c:1}]},
+  {cat:'D',name:'蔓越莓錠',note:'',subs:[{n:'',c:1}]},
+  {cat:'D',name:'益生菌 120顆',note:'',subs:[{n:'',c:0}]},
+  {cat:'D',name:'還原型輔酵素Q10+維生素E',note:'',subs:[{n:'',c:0}]},
+  {cat:'D',name:'益生菌(粉狀)',note:'',subs:[{n:'威德 90包/盒',c:3},{n:'善存 90包/盒',c:0}]},
+  {cat:'D',name:'UC2膠原錠 110錠',note:'',subs:[{n:'',c:0}]},
+  {cat:'D',name:'檸檬酸鈣',note:'',subs:[{n:'威德 90包/盒',c:0},{n:'顧可飛 450顆/罐',c:0}]},
+  {cat:'D',name:'大麥若葉 176包',note:'',subs:[{n:'',c:1}]},
+  {cat:'D',name:'燕麥/五麥',note:'',subs:[{n:'大麥燕片',c:0},{n:'全天然五麥',c:1}]},
+  {cat:'D',name:'醬油',note:'',subs:[{n:'',c:3}]},
+  {cat:'D',name:'褪黑激素',note:'',subs:[{n:'',c:2}]},
 ];
  
 // ===== State =====
-let items=[],hist=[],userName='',curTab='A',srch='',editId=null,editSubs=[],editCat='A';
+let items=[],hist=[],userName='',curTab='A',srch='',editIdx=null,editSubs=[],editCat='A';
 let itemsLoaded=false;
  
 // ===== Status indicator =====
@@ -317,10 +318,14 @@ function fmtSubs(subs){
   if(!subs||!subs.length)return'（無）';
   return subs.map(s=>s.n?`${s.n} ×${s.c}`:`×${s.c}`).join('；');
 }
-function nextId(cat){
-  const m=items.filter(i=>i.cat===cat).map(i=>parseInt(i.id.slice(1),10)||0).reduce((a,b)=>Math.max(a,b),0);
-  return`${cat}${m+1}`;
+ 
+// 取得品項在該分類中的順序編號（1, 2, 3...）
+function getDisplayNo(it){
+  const sameCat=items.filter(i=>i.cat===it.cat);
+  const idx=sameCat.indexOf(it);
+  return idx>=0?idx+1:'?';
 }
+ 
 function filtered(cat){
   let list=cat==='shop'?items.filter(i=>oosInfo(i).any):items.filter(i=>i.cat===cat);
   if(srch){
@@ -346,6 +351,41 @@ async function saveHist(){
     if(hist.length>200)hist=hist.slice(0,200);
     await db.collection("inventory").doc("hist").set({data:hist});
   }catch(e){console.error('saveHist error:',e);}
+}
+ 
+// 把舊資料（有 A1, B2 等 id）轉換為新格式（移除 id 欄位）
+// 同時保留分類內的原始順序
+function migrateItems(rawItems){
+  // 若資料有舊的 id 欄位，按照舊 id 的數字排序保留順序
+  const hasOldId=rawItems.some(i=>typeof i.id==='string'&&/^[A-D]\d+$/.test(i.id));
+  if(hasOldId){
+    // 依分類分組並按舊 id 的數字排序
+    const byCat={A:[],B:[],C:[],D:[]};
+    rawItems.forEach(i=>{
+      if(byCat[i.cat])byCat[i.cat].push(i);
+    });
+    Object.keys(byCat).forEach(k=>{
+      byCat[k].sort((a,b)=>{
+        const na=parseInt((a.id||'').slice(1),10)||0;
+        const nb=parseInt((b.id||'').slice(1),10)||0;
+        return na-nb;
+      });
+    });
+    // 攤平回單一陣列並移除 id 欄位
+    const result=[];
+    ['A','B','C','D'].forEach(k=>{
+      byCat[k].forEach(i=>{
+        const {id,...rest}=i;
+        result.push(rest);
+      });
+    });
+    return result;
+  }
+  // 新格式：直接回傳（順便清理可能殘留的 id 欄位）
+  return rawItems.map(i=>{
+    const {id,...rest}=i;
+    return rest;
+  });
 }
  
 // ===== Name (local only) =====
@@ -387,8 +427,11 @@ function cardHtml(it){
   const lb=it.updatedBy?`上次：<span class="who">${esc(it.updatedBy)}</span> · ${fmtDate(it.updatedAt)}`:'尚未更新';
   const subs=it.subs||[];const isSingle=subs.length===1&&!subs[0].n;
   const iCnt=isSingle?`<span class="inline-cnt${subs[0].c===0?' z':''}">${subs[0].c}</span>`:'';
-  return`<div class="card${cls?' '+cls:''}" data-cat="${it.cat}" data-id="${it.id}">
-    <div class="card-top"><div class="card-left"><div class="card-id">${it.id}</div><div class="card-name">${esc(it.name)}</div>${badge}</div>${iCnt}</div>
+  // 使用 items 陣列中的 index 作為點擊識別
+  const idx=items.indexOf(it);
+  const displayNo=getDisplayNo(it);
+  return`<div class="card${cls?' '+cls:''}" data-cat="${it.cat}" data-idx="${idx}">
+    <div class="card-top"><div class="card-left"><div class="card-id">${displayNo}</div><div class="card-name">${esc(it.name)}</div>${badge}</div>${iCnt}</div>
     ${subsHtml(it)}
     ${it.note?`<div class="card-note">📝 ${esc(it.note)}</div>`:''}
     <div class="card-meta">⏱ ${lb}</div>
@@ -396,7 +439,7 @@ function cardHtml(it){
 }
  
 function bindCards(){
-  document.querySelectorAll('.card').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.id)));
+  document.querySelectorAll('.card').forEach(el=>el.addEventListener('click',()=>openModal(+el.dataset.idx)));
 }
  
 function render(){
@@ -469,15 +512,16 @@ function histHtml(h){
 }
  
 // ===== Modal =====
-function openModal(id,cat){
+function openModal(idx,cat){
   if(!userName.trim()){
     toast('請先填入你的名字 👤');
     const u=document.getElementById('userName');u.focus();
     try{u.scrollIntoView({behavior:'smooth',block:'center'});}catch(e){}
     return;
   }
-  editId=id;editCat=cat||'A';
-  if(!id){
+  editIdx=(idx===null||idx===undefined)?null:idx;
+  editCat=cat||'A';
+  if(editIdx===null){
     editSubs=[{n:'',c:0}];
     document.getElementById('mTitle').textContent='新增品項';
     document.getElementById('mSub').textContent=`分類：${CATS[editCat].emoji} ${CATS[editCat].full}`;
@@ -485,10 +529,11 @@ function openModal(id,cat){
     document.getElementById('mNote').value='';
     document.getElementById('mDel').style.display='none';
   }else{
-    const it=items.find(i=>i.id===id);if(!it)return;
+    const it=items[editIdx];if(!it)return;
     editSubs=dc(it.subs||[{n:'',c:0}]);editCat=it.cat;
+    const displayNo=getDisplayNo(it);
     document.getElementById('mTitle').textContent=`編輯 · ${it.name}`;
-    document.getElementById('mSub').textContent=`${it.id} · ${CATS[it.cat].emoji} ${CATS[it.cat].full}`;
+    document.getElementById('mSub').textContent=`${CATS[it.cat].emoji} ${CATS[it.cat].full} · 編號 ${displayNo}`;
     document.getElementById('mName').value=it.name;
     document.getElementById('mNote').value=it.note||'';
     document.getElementById('mDel').style.display='';
@@ -498,7 +543,7 @@ function openModal(id,cat){
   setTimeout(()=>document.getElementById('mName').focus(),100);
 }
  
-function closeModal(){document.getElementById('modal').classList.remove('show');editId=null;}
+function closeModal(){document.getElementById('modal').classList.remove('show');editIdx=null;}
  
 function renderSiRows(){
   const c=document.getElementById('siRows');
@@ -547,30 +592,48 @@ async function handleSave(){
   if(!name){toast('請填寫品項名稱');return;}
   const subs=editSubs.map(s=>({n:s.n.trim(),c:s.c}));
   const now=new Date().toISOString();
-  if(editId){
-    const it=items.find(i=>i.id===editId);if(!it)return;
+  if(editIdx!==null){
+    const it=items[editIdx];if(!it)return;
     if(it.name===name&&it.note===note&&JSON.stringify(it.subs)===JSON.stringify(subs)){closeModal();return;}
     hist.unshift({act:'upd',name,on:it.name,nn:name,os:dc(it.subs),ns:subs,ono:it.note,nno:note,by:userName,at:now});
     it.name=name;it.subs=subs;it.note=note;it.updatedBy=userName;it.updatedAt=now;
     toast('已更新 ✓');
   }else{
-    const id=nextId(editCat);
-    items.push({id,cat:editCat,name,subs,note,updatedBy:userName,updatedAt:now});
+    // 新增到該分類的最後（這樣編號會接在最後）
+    // 找出該分類最後一筆的位置，插入其後
+    let insertAt=items.length;
+    for(let i=items.length-1;i>=0;i--){
+      if(items[i].cat===editCat){insertAt=i+1;break;}
+      // 若整個分類都沒有，找出按 A B C D 順序應插入的位置
+    }
+    // 若該分類目前完全沒有品項
+    if(!items.some(i=>i.cat===editCat)){
+      // 依 A B C D 順序找位置
+      const order=['A','B','C','D'];
+      const myOrd=order.indexOf(editCat);
+      insertAt=items.length;
+      for(let i=0;i<items.length;i++){
+        if(order.indexOf(items[i].cat)>myOrd){insertAt=i;break;}
+      }
+    }
+    const newItem={cat:editCat,name,subs,note,updatedBy:userName,updatedAt:now};
+    items.splice(insertAt,0,newItem);
+    const displayNo=getDisplayNo(newItem);
     hist.unshift({act:'add',name,ns:subs,by:userName,at:now});
-    toast(`已新增 ${id} ✓`);
+    toast(`已新增 ${editCat}類 編號 ${displayNo} ✓`);
   }
   closeModal();renderTabs();render();
   await saveItems();await saveHist();
 }
  
 async function handleDel(){
-  if(!editId)return;
-  const it=items.find(i=>i.id===editId);if(!it)return;
-  if(!confirm(`確定要刪除「${it.name}」嗎？\n此動作無法復原。`))return;
+  if(editIdx===null)return;
+  const it=items[editIdx];if(!it)return;
+  if(!confirm(`確定要刪除「${it.name}」嗎？\n此動作無法復原。\n（刪除後該分類的編號會自動重新排列）`))return;
   const now=new Date().toISOString();
   hist.unshift({act:'del',name:it.name,by:userName,at:now});
-  items=items.filter(i=>i.id!==editId);
-  closeModal();toast('已刪除');renderTabs();render();
+  items.splice(editIdx,1);
+  closeModal();toast('已刪除，編號已重新排列');renderTabs();render();
   await saveItems();await saveHist();
 }
  
@@ -613,7 +676,8 @@ async function init(){
   try{
     db.collection('inventory').doc('items').onSnapshot(snap=>{
       if(snap.exists && snap.data().data){
-        items=snap.data().data;
+        // 自動轉換舊資料格式（移除 A1, B2 等 id）
+        items=migrateItems(snap.data().data);
       }else{
         // 雲端沒資料 → 第一次使用，寫入初始資料
         items=dc(INIT);
@@ -656,3 +720,4 @@ init();
 </script>
 </body>
 </html>
+ 
